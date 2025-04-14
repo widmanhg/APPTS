@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Francisco Osorno",
+    "Cargo": "Ingeniero",
+    "Foto": "https://media.licdn.com/dms/image/v2/C4E03AQHkjWiCS3lXrA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1516756958193?e=2147483647&v=beta&t=ZGDzr3PlJyoOTcAYVYP37kg4_azRW7Mo-N8WbYh-VBQ",
+    "Perfil": "https://mx.linkedin.com/in/francisco-osorno-0843927a?trk=org-employees"
+  },
+  "empresa": "DYSAA",
+  "sector": "machinery manufacturing",
+  "fecha": "2025-04-08T20:35:46.402Z",
+  "flag": "green"
+}

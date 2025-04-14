@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/directory/employee.css"> <!-- Tu archivo CSS para diseño personalizado -->
+
+    <title>Directorio de Empleados</title>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="botones-parent"></div>
+    </div>
+    <div class="sidebar" id="sidebar-container">
+        <button class="elementos-sidebar4" id="btn-configuracion" onclick="location.href='/configuration'">
+            <i class="fas fa-cog"></i>
+            <div class="grficos">Configuración</div>
+        </button>
+        <button class="elementos-sidebar3" id="btn-scraping" onclick="location.href='/scraping'">
+            <i class="fas fa-download"></i>
+            <div class="grficos">Obtener datos</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/coso'">
+            <i class="fas fa-table"></i>
+            <div class="grficos">Edición</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-historicos" onclick="location.href='/historico'">
+            <i class="fas fa-clipboard"></i>
+            <div class="grficos">Históricos</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-graficos" onclick="location.href='/graficos'">
+            <i class="fas fa-chart-column"></i>
+            <div class="grficos">Gráficos</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-directorio" onclick="location.href='/directorio'">
+            <i class="fas fa-user"></i>
+            <div class="grficos">Directorio</div>
+        </button>
+    </div>
+
+    <div class="employee-cards-container">
+        <!-- Las tarjetas de empleados se insertarán dinámicamente aquí -->
+    </div>
+</body>
+
+
+<!-- Modal de Confirmación -->
+<div id="delete-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Eliminar Favorito</h3>
+        <p>¿Estás seguro de que deseas eliminar a la persona?</p>
+        <hr>
+        <div class="modal-buttons">
+            <button id="confirm-delete" class="btn btn-danger">Aceptar</button>
+            <button id="cancel-delete" class="btn btn-secondary">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+    <script src="js/directorio/directorio.js"></script>
+</body>
+</html>

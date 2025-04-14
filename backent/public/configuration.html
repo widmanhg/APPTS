@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <title>Gestión de Tablas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/configuarations/modales.css">
+</head>
+<body>
+    <div id="app-container">
+        <div class="top-bar"></div>
+
+        <div class="sidebar" id="sidebar-container">
+            <button class="elementos-sidebar4" id="btn-configuracion" onclick="location.href='/configuration'">
+                <i class="fas fa-cog"></i>
+                <div class="grficos">Configuración</div>
+            </button>
+            <button class="elementos-sidebar3" id="btn-scraping" onclick="location.href='/scraping'">
+                <i class="fas fa-download"></i>
+                <div class="grficos">Obtener datos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/coso'">
+                <i class="fas fa-table"></i>
+                <div class="grficos">Edición</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-historicos" onclick="location.href='/historico'">
+                <i class="fas fa-clipboard"></i>
+                <div class="grficos">Históricos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-graficos" onclick="location.href='/graficos'">
+                <i class="fas fa-chart-column"></i>
+                <div class="grficos">Gráficos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-directorio" onclick="location.href='/directorio'">
+                <i class="fas fa-user"></i>
+                <div class="grficos">Directorio</div>
+            </button>
+        </div>
+
+        <div class="btn-container">
+            <button class="main-button" onclick="openModal('delete')">
+                <i class="fas fa-trash"></i>
+                Eliminar Tabla
+            </button>
+            <button class="main-button" onclick="openModal('clear')">
+                <i class="fas fa-eraser"></i>
+                Vaciar Tabla
+            </button>
+            <button class="main-button" onclick="openModal('rename')">
+                <i class="fas fa-pencil-alt"></i>
+                Renombrar Tabla
+            </button>
+            <button class="main-button" onclick="openModal('copy')">
+                <i class="fas fa-copy"></i>
+                Copiar Tabla
+            </button>
+        </div>
+        
+
+        <!-- Modales -->
+        <div id="modal-delete" class="modal">
+            <div class="modal-content">
+                <h3>Eliminar Tabla</h3>
+                
+                <select id="deleteTableSelect">
+                    <option value="">Cargando tablas...</option>
+                </select>
+                <hr>
+                <div class="modal-buttons">
+                    <button id="cancel-delete" onclick="closeModal('delete')">Cancelar</button>
+                    <button id="confirm-delete" onclick="deleteTable()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-clear" class="modal">
+            <div class="modal-content">
+                <h3>Vaciar Tabla</h3>
+                
+                <select id="clearTableSelect">
+                    <option value="">Cargando tablas...</option>
+                </select>
+                <hr>
+                <div class="modal-buttons">
+                    <button id="cancel-clear" onclick="closeModal('clear')">Cancelar</button>
+                    <button id="confirm-clear" onclick="clearTable()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-rename" class="modal">
+            <div class="modal-content">
+                <h3>Renombrar Tabla</h3>
+                
+                <select id="renameTableSelect">
+                    <option value="">Cargando tablas...</option>
+                </select>
+                <input type="text" id="newTableName" placeholder="Nuevo nombre">
+                <hr>
+                <div class="modal-buttons">
+                    <button id="cancel-rename" onclick="closeModal('rename')">Cancelar</button>
+                    <button id="confirm-rename" onclick="renameTable()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-copy" class="modal">
+            <div class="modal-content">
+                <h3>Copiar Tabla</h3>
+                
+                <select id="copyTableSelect">
+                    <option value="">Cargando tablas...</option>
+                </select>
+                <input type="text" id="newTableCopyName" placeholder="Nuevo nombre de tabla">
+                <hr>
+                <div class="modal-buttons">
+                    <button id="cancel-copy" onclick="closeModal('copy')">Cancelar</button>
+                    <button id="confirm-copy" onclick="copyTable()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/configurations/tablebuttons.js"></script>
+</body>
+</html>

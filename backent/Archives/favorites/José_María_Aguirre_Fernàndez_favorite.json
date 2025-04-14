@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "José María Aguirre Fernàndez",
+    "Cargo": "ABC LEASING DE MÉXICO, Finbe ABC",
+    "Foto": "https://media.licdn.com/dms/image/v2/D5603AQFDdv3dREnuJQ/profile-displayphoto-shrink_100_100/B56ZTb5rs.GQAU-/0/1738856121166?e=2147483647&v=beta&t=FA6y9WHdYFpwGe1Q3JAYy1rq8IxT9psnC33dCc6miAw",
+    "Perfil": "https://mx.linkedin.com/in/jos%C3%A9-mar%C3%ADa-aguirre-fern%C3%A0ndez-31184932?trk=org-employees"
+  },
+  "empresa": "FinBe ABC",
+  "sector": "financial services",
+  "fecha": "2025-04-07T16:46:35.335Z",
+  "flag": "green"
+}

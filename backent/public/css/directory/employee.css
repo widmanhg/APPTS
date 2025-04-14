@@ -1,0 +1,110 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f4; /* Fondo gris claro */
+    margin: 0;
+    padding: 0;
+    justify-content: flex-start;
+}
+
+.employee-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 20px;
+    margin-left: 60px; /* Margen para la sidebar */
+    margin-top: 30px; /* Margen superior para el contenedor */
+}
+
+.employee-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 1000px; /* Aumentamos el ancho */
+    height: 150px; /* Reducimos la altura */
+    display: flex;
+    flex-direction: row; /* Alineación horizontal */
+    align-items: center;
+    padding: 15px;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px; /* Margen inferior para las tarjetas */
+}
+
+.employee-card:hover {
+    transform: translateY(-10px);
+}
+
+.employee-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px; /* Aumentamos el espacio a la derecha de la imagen */
+}
+
+.employee-info {
+    text-align: left; /* Alineamos la información a la izquierda */
+    flex-grow: 1; /* Hace que la información ocupe el resto del espacio */
+}
+
+.employee-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.employee-position {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.employee-company {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.employee-sector {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.employee-footer {
+    display: flex;
+    flex-direction: column; /* Alinea los iconos en columna */
+    justify-content: center; /* Centra los íconos verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    gap: 10px; /* Espacio entre los íconos */
+}
+
+
+.employee-footer .flag {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.employee-footer .flag.green {
+    background-color: green;
+}
+
+.employee-footer .flag.yellow {
+    background-color: yellow;
+}
+
+.employee-footer .flag.red {
+    background-color: red;
+}
+
+.employee-footer i {
+    font-size: 20px;
+    color: #0077b5; /* Color de LinkedIn */
+}
+
+.star {
+    font-size: 20px;
+    color: gold;
+    cursor: pointer;
+}

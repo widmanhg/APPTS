@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/scrapper/main.css">
+    <link rel="stylesheet" href="css/scrapper/modal.css">
+    <link rel="stylesheet" href="css/scrapper/ubicacion-industry.css">
+    <style>
+        .container3 {
+          position: relative;
+          width: 300px;
+          font-family: Arial, sans-serif;
+        }
+    
+        #input-tamano {
+          width: 100%;
+          padding: 10px;
+          cursor: pointer;
+          border: transparent;
+          border-radius: 5px;
+          background: transparent;
+        }
+    
+        .dropdown {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: white;
+          border: 1px solid #ccc;
+          border-top: none;
+          z-index: 100;
+          display: none;
+          max-height: 200px;
+          overflow-y: auto;
+          border-radius: 0 0 5px 5px;
+        }
+    
+        .dropdown label {
+          display: block;
+          padding: 8px 12px;
+          cursor: pointer;
+        }
+    
+        .dropdown label:hover {
+          background-color: #f0f0f0;
+        }
+      </style>
+
+    <link rel="stylesheet" href="css/sidebar.css">
+</head>
+<body>
+    <div class="scraping">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="botones-parent"></div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar-container">
+            <button class="elementos-sidebar4" id="btn-configuracion" onclick="location.href='/configuration'">
+                <i class="fas fa-cog"></i>
+                <div class="grficos">Configuración</div>
+            </button>
+            <button class="elementos-sidebar3" id="btn-scraping" onclick="location.href='/scraping'">
+                <i class="fas fa-download"></i>
+                <div class="grficos">Obtener datos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/coso'">
+                <i class="fas fa-table"></i>
+                <div class="grficos">Edición</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-historicos" onclick="location.href='/historico'">
+                <i class="fas fa-clipboard"></i>
+                <div class="grficos">Históricos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-graficos" onclick="location.href='/graficos'">
+                <i class="fas fa-chart-column"></i>
+                <div class="grficos">Gráficos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/directorio'">
+                <i class="fas fa-user"></i>
+                <div class="grficos">Directorio</div>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container">
+            <!-- Header Section -->
+            <div class="container1">
+                <div class="icon-and-text">
+                    <i class="fas fa-download"></i>
+                    <div class="page-title">Scraping</div>
+                </div>
+                <div class="download-and-selector">
+                    <button class="botones1" id="btn-crear-usuario" onclick="openModalusuario()">
+                        <i class="fas fa-person"></i>
+                        <div class="ingresar">Definir Usuario</div>
+                    </button>
+                    <button class="botones1" id="btn-cargar-config" onclick="loadConfigurations()">
+                        <i class="fas fa-upload"></i>
+                        <div class="ingresar">Cargar configuración</div>
+                      </button>
+                    <button class="botones1" id="btn-crear-tabla-urls" onclick="openModal()">
+                        <i class="fas fa-link"></i>
+                        <div class="ingresar">Crear tabla de URLs</div>
+                    </button>
+                    <button class="botones1" id="btn-crear-tabla-info" onclick="openModalInfo()">
+                        <i class="fas fa-table"></i>
+                        <div class="ingresar">Crear tabla de información</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scraping Forms -->
+            <div class="form">
+                <!-- Obtener URLs Section -->
+                <div class="header1">
+                    <div class="title">Obtener URLs</div>
+                    <div class="form1">
+
+                        <div class="search-parameters">
+                            <div class="title1">Parámetros de búsqueda</div>
+                            <div class="container2">
+                                <div class="inputs">
+                                    <div class="input">
+                                        <div class="label-container">
+                                            <div class="texto">Ubicaciones</div>
+                                        </div>
+                                        <div class="container3">
+                                            <input type="text" id="Locations" placeholder="Todos do destino" class="ingresar">
+                                        </div>
+                                        <div id="suggestions" class="suggestions"></div>
+                                        <input type="hidden" id="selectedValues">
+                                    </div>
+                                  
+                                </div>
+                                <div class="inputs">
+                                    <div class="select">
+                                        <div class="input">
+                                            <div class="label-container">
+                                                <div class="texto">Depositorio de URLs</div>
+                                            </div>
+                                            <div class="container3">
+                                                <select id="select-tabla-origen" class="ingresar">
+                                                    <option value="">Seleccionar</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container2">
+                                <div class="inputs">
+                                    <div class="input">
+                                        <div class="label-container">
+                                            <div class="texto">Industrias</div>
+                                        </div>
+                                        <div class="container3">
+                                            <input type="text" id="Industries" placeholder="Selecciona industrias" class="ingresar">
+                                        </div>
+                                        <input type="hidden" id="selectedIndustries" />
+                                        <div id="industrySuggestions" class="suggestions"></div>
+                                    </div>
+                                  
+                                </div>
+                                <div class="inputs">
+                                    <div class="input">
+                                        <div class="label-container">
+                                            <div class="texto">Páginas</div>
+                                        </div>
+                                        <div class="container3">
+                                            <input type="number" id="input-paginas" placeholder="Número de páginas" class="ingresar" min="1">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="container2">
+                                <div class="inputs">
+                                    <div class="input">
+                                        <div class="label-container">
+                                            <div class="texto">Numero de empleados</div>
+                                        </div>
+                                        <div class="container3">
+                                            <input type="text" placeholder="Selecciona tamaños" id="input-tamano" readonly>
+                                            <div class="dropdown" id="dropdown-tamano"></div>
+                                          </div>
+                                    </div>
+                                </div>
+                                <div class="inputs">
+                                    <div class="input">
+                                        <div class="label-container">
+                                            <div class="texto">Bloquear</div>
+                                        </div>
+                                        <div class="container3">
+                                            <input type="text" id="blocked-companies" placeholder="Ingresa empresas que no quieras ver" class="ingresar">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button class="botones5" id="btn-guardar">
+                            <div class="botn3">Guardar</div>
+                        </button>
+                        <button class="botones4" id="btn-obtener-urls" onclick="openUrlModal()">
+                            <div class="botn3">Obtener URLs</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Obtener Información Section -->
+                <div class="header2">
+                    <div class="title">Obtener información</div>
+                    <div class="access-data2">
+                        <div class="title1">Datos de traslado</div>
+                        <div class="container5">
+                            <div class="inputs">
+                                <div class="select">
+                                    <div class="input">
+                                        <div class="label-container">
+                                            <div class="texto">Tabla origen</div>
+                                        </div>
+                                        <div class="container3">
+                                            <select id="select-tabla-origen2" class="ingresar">
+                                                <option value="">Seleccionar</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inputs">
+                                <div class="select">
+                                    <div class="input">
+                                        <div class="label-container">
+                                            <div class="texto">Depositorio de Informacion</div>
+                                        </div>
+                                        <div class="container3">
+                                            <select id="select-tabla-destino" class="ingresar">
+                                                <option value="">Seleccionar</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons1">
+                        <button class="botones6" id="btn-cancelar" onClick="">
+                            <div class="botn3">Cancelar</div>
+                        </button>
+                        <button class="botones7" id="btn-obtener-info" onClick="abrirModal()">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="botn3">Obtener información</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="myModal">
+        <div class="modal-content">
+            <h3>Crear Tabla de urls</h3>
+            <label for="table-name-input-info">Quiere crear la tabla?</label>
+            <input type="text" id="table-name-input" class="inputs" placeholder="Nombre de la tabla" />
+            <hr>
+            <!-- Campo de entrada para el nombre de la tabla -->
+            
+            <div class="modal-buttons">
+                <button id="cancel-delete" onclick="closeModal()">Cancelar</button>
+                <button id="confirm-delete" onclick="createTableFromModal(); closeModal();">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Crear Tabla -->
+<div id="modal-create-table-info" class="modal">
+    <div class="modal-content">
+      <h3>Crear Tabla de Información</h3>
+      <label for="table-name-input-info">¿Quiere crear la tabla?</label>
+      <div class="inputs">
+        <input type="text" id="table-name-input-info" placeholder="Ingresa el nombre de la tabla" />
+      </div>
+      <hr />
+      <div class="modal-buttons">
+        <button id="cancel-create-info" onclick="closeModalInfo()">Cancelar</button>
+        <button id="confirm-create-info" onclick="createTableFromModalInfo(); closeModalInfo();">Aceptar</button>
+      </div>
+    </div>
+  </div>
+  
+
+    <!-- Modal -->
+    <div class="modal" id="guardarModal">
+        <div class="modal-content">
+            <h3>Guardar configuración</h3>
+            <input type="text" id="configName" placeholder="Nombre de la configuración">
+            <hr>
+            <div class="modal-buttons">
+                <button id="cancel-create" onclick="cancelarAccion()">Cancelar</button>
+                <button id="confirm-create" onclick="saveconfig()">Guardar</button> 
+            </div>
+        </div>
+    </div>
+    
+    
+  
+
+
+    <div id="usuarioModal" class="modal">
+        <div class="modal-content">
+            <h3>Definir Usuario</h3>
+            <hr>
+            <div class="inputs">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" placeholder="Ingresa tu correo" required>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+            </div>
+            <hr>
+            <div class="modal-buttons">
+                <button id="cancel-create" onclick="closeModalusuario()">Cancelar</button>
+                <button id="confirm-create" onclick="submitForm()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="urlModal" class="modal">
+        <div class="modal-content">
+            <h3>¿Estás seguro de que deseas obtener las URLs?</h3>
+            <hr>
+            <div class="modal-buttons">
+                <button id="cancel-delete" onclick="closeUrlModal()">Cancelar</button>
+                <button id="confirm-delete" onclick="getUrlsAndClose()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+      <!-- Modal de selección de archivos -->
+  <div id="configModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="closeConfigModal" class="close">&times;</span>
+      <h2>Selecciona un archivo</h2>
+      <ul id="configFileList"></ul>
+    </div>
+  </div>
+
+  <!-- Modal de visualización del JSON -->
+  <div id="jsonModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>Contenido del archivo</h2>
+      <div id="jsonTableContainer"></div>
+      <button id="executeButton">Ejecutar</button>
+      <button id="deleteButton">Eliminar</button>
+    </div>
+  </div>
+
+  <div id="unique-modal" class="modal">
+    <div class="modal-content">
+        <h3>Confirmar Datos</h3>
+        
+        <p>¿Deseas confirmar la información seleccionada?</p>
+        <hr>
+        <div class="modal-buttons">
+            <button id="cancelar-btn" onClick="cancelarModal()">Cancelar</button>
+            <button id="confirmar-btn" onClick="confirmarDatos()">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="js/scraper/createTable.js"></script>
+<script src="js/scraper/originanddestiny.js"></script>
+<script src="js/scraper/ubicacion.js"></script>
+<script src="js/scraper/industry.js"></script>
+<script src="js/scraper/PagesandSizes.js"></script>
+<script src="js/scraper/getinfo.js"></script>
+<script src="js/scraper/saveconfig.js"></script>
+<script src="js/scraper/loadConfigurations.js"></script>
+<script src="js/scraper/execute.js"></script>
+
+  
+</body>
+</html>

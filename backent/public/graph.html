@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+
+
+
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/graph/move.css">
+    <link rel="stylesheet" href="css/graph/modal.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap"></script>
+>
+</head>
+<body>
+  	<div id="app-container">
+        <div class="top-bar">
+        </div>
+
+        <div class="sidebar" id="sidebar-container">
+            <button class="elementos-sidebar4" id="btn-configuracion" onclick="location.href='/configuration'">
+                <i class="fas fa-cog"></i>
+                <div class="grficos">Configuración</div>
+            </button>
+            <button class="elementos-sidebar3" id="btn-scraping" onclick="location.href='/scraping'">
+                <i class="fas fa-download"></i>
+                <div class="grficos">Obtener datos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/coso'">
+                <i class="fas fa-table"></i>
+                <div class="grficos">Edición</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-historicos" onclick="location.href='/historico'">
+                <i class="fas fa-clipboard"></i>
+                <div class="grficos">Históricos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-graficos" onclick="location.href='/graficos'">
+                <i class="fas fa-chart-column"></i>
+                <div class="grficos">Gráficos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/directorio'">
+                <i class="fas fa-user"></i>
+                <div class="grficos">Directorio</div>
+            </button>
+    
+        </div>
+
+        <div id="title-section">
+            <i class="fas fa-file-alt"></i>
+            <h2>Visualización de datos</h2>
+        </div>
+
+        <select id="reportSelector">
+            <option value="">Seleccione un reporte...</option>
+        </select>
+
+        <div class="content-wrapper">
+            <div id="chartsContainer" style="display: none;">
+                <div id="chartSectoresContainer">
+                    <canvas id="chartSectores"></canvas>
+                </div>
+        
+                <div id="chartCompletitudContainer" class="completitud-container" style="display: none;">
+                    <!-- Cuadros KPI -->
+                    <div class="completitud-kpi-container">
+                        <div class="completitud-kpi-box">
+                            <p>Completitud Promedio: <span id="completitudPromedio"></span></p>
+                        </div>
+                        <div class="completitud-kpi-box">
+                            <p>Registros Completos: <span id="porcentajeCompletos"></span></p>
+                        </div>
+                        <div class="completitud-kpi-box">
+                            <p>Registros Incompletos: <span id="porcentajeIncompletos"></span></p>
+                        </div>
+                    </div>
+                
+                    <!-- Contenedor de las gráficas -->
+                    <div class="completitud-charts-container">
+                        <canvas id="chartCompletitud" class="completitud-doughnut-chart"></canvas>
+                        <canvas id="chartCompletitudCategoria" class="completitud-bar-chart"></canvas>
+                    </div>
+                </div>
+                
+                
+                
+        
+                <div id="chartSectorTamanoContainer" style="display: none;">
+                    <canvas id="chartSectorTamano"></canvas>
+                    <p>Sector con Mayor Promedio: <span id="sectorMayorPromedio"></span></p>
+                    <p>Sector con Menor Promedio: <span id="sectorMenorPromedio"></span></p>
+                    <p>Tamaño Más Común: <span id="tamanoMasComun"></span></p>
+                </div>
+            </div>
+        
+            <!-- Paginación dentro del contenedor -->
+            <div id="paginationContainer">
+                <button id="prevPage" style="display: none;"> < </button>
+                <span id="pageNumbersContainer"></span>
+                <button id="nextPage" style="display: none;"> ></button>
+            </div>
+
+            
+            
+        
+        
+
+
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2> <!-- Título dinámico -->
+            <ul id="modal-list">
+                <!-- Las empresas se añadirán aquí -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-employee" class="modal-employee">
+        <div class="modal-content">
+            <span class="close-empleados">&times;</span>
+            <h2 id="modal-title-employee"></h2>
+            <ul id="modal-list-employee"></ul>
+        </div>
+    </div>
+    
+
+
+    
+</body>
+
+<script src="js/graph/check.js"></script>
+<script src="js/graph/pagination.js"></script>
+<script src="js/graph/completitud.js"></script>
+<script src="js/graph/sectores.js"></script>
+<script src="js/graph/tamano.js"></script>
+<script src="js/graph/empleados.js"></script>
+</html>

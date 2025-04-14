@@ -1,0 +1,116 @@
+/* Estilos generales */
+.scraping {
+    width: 100%;
+    position: relative;
+    background-color: #f3f4f6;
+    height: 1080px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 14px;
+    color: #3d3d3d;
+    font-family: Inter;
+}
+
+.botones-parent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+}
+
+.botones {
+    border-radius: 500px;
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 8px;
+    transition: background-color 0.3s ease; /* Añadir transición suave */
+}
+
+/* Efecto hover para cambiar a verde */
+.botones:hover {
+    background-color: #27ae60; /* Verde cuando el ratón pasa sobre el botón */
+}
+
+/* Evitar que el contenido ajuste el tamaño del botón */
+.avatares-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 30px; /* Asegura que el sidebar tenga el tamaño correcto */
+    background-color: #2c3e50;
+    padding: 20px 10px; /* Mayor padding para igualar grosor con el topbar */
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 10px;
+    left: 0;
+    margin-top: 10px;
+}
+
+.elementos-sidebar,
+.elementos-sidebar3,
+.elementos-sidebar4 {
+    display: flex;
+    flex-direction: column;  /* Apilar icono y texto */
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px; /* Ajusta la altura para que sea más grande */
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    box-sizing: border-box;
+    white-space: nowrap; /* Evitar que el texto o iconos se ajusten */
+    flex-shrink: 0; /* Evitar que el contenido se ajuste al tamaño */
+}
+
+/* Efecto hover para los botones del sidebar */
+.elementos-sidebar:hover,
+.elementos-sidebar3:hover,
+.elementos-sidebar4:hover {
+    background-color:  #1abc9c; /* Verde cuando el ratón pasa sobre el botón */
+}
+
+/* Topbar */
+.top-bar {
+    width: 100%;
+    background-color: #2c3e50;
+    padding: 20px 10px; /* Igualar el grosor al del sidebar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor para el texto del icono y la fuente personalizada */
+.icono-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;  /* Tamaño de fuente personalizado */
+}
+
+.grficos {
+    position: relative;
+    font-weight: 300;
+    font-size: 8px;  /* Tamaño de fuente personalizado */
+}

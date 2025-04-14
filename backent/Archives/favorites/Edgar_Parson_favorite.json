@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Edgar Parson",
+    "Cargo": "CEO at Pavos Parson | Co-Founder of Parched",
+    "Foto": "https://media.licdn.com/dms/image/v2/D5603AQEFWkmrekjTPQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1676486486541?e=2147483647&v=beta&t=sUzJOv9l4eTJLnRX5nm6OGIYY-lf0YICoEfjrUKNK8g",
+    "Perfil": "https://mx.linkedin.com/in/edgarparson?trk=org-employees"
+  },
+  "empresa": "Pavos Parson",
+  "sector": "food and beverage manufacturing",
+  "fecha": "2025-04-04T19:21:17.471Z",
+  "flag": "yellow"
+}

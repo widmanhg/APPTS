@@ -1,0 +1,218 @@
+body {
+    background-color: #f3f4f6;
+}
+
+
+/* Contenedor principal donde estarán las gráficas, paginación y el wrapper */
+.content-wrapper {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 80%; /* Puedes ajustar este valor */
+    box-shadow: 0px 4px 10px rgba(9, 9, 9, 0.1);
+}
+
+/* Alineación y estilo de las gráficas */
+#chartSectoresContainer,
+#chartCompletitudContainer,
+#chartSectorTamanoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    margin: 30px 0; /* Se asegura de que haya margen uniforme en la parte superior e inferior */
+}
+
+canvas {
+    max-width: 1200px; /* Ajusta este valor según necesites */
+    max-height: 600px; /* Ajusta este valor según necesites */
+    width: 100%;
+    height: auto;
+}
+
+p {
+    text-align: center;
+}
+
+/* Paginación centrada y alineada con las gráficas */
+#paginationContainer {
+    display: flex;
+    justify-content: center; /* Centra los botones de paginación */
+    align-items: center;
+    margin-top: 20px;
+}
+
+#reportSelector {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 15px;
+    width: 250px;
+    appearance: none; /* Oculta la flechita por defecto */
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    margin-top: 50px;
+    margin-right: 120px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#reportSelector:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+
+body, h1, h2, h3, p, button, select, div {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: normal !important;
+}
+
+
+#title-section h2 {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+/* Estilo del título de la sección */
+#title-section {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    gap: 10px;
+    margin-left: 130px; /* Ajusta según el ancho de la sidebar */
+}
+
+#title-section h2 {
+    color: #2c3e50;
+    font-size: 17px;
+    margin: 0;
+    padding: 0;
+}
+
+#title-section i {
+    font-size: 17px;
+    color: #2c3e50;
+}
+
+/* Estilo para los botones */
+
+#paginationContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px; /* Ajusta según necesites */
+}
+
+#paginationContainer button {
+    background-color: transparent;
+    border: transparent;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#paginationContainer button:disabled {
+    cursor: default;
+}
+
+#paginationContainer button:hover:not(:disabled) {
+    background-color: #eee;
+}
+
+#paginationContainer button.active {
+    background-color: #1f2937;
+    color: white;
+    align-items: center;
+}
+
+#paginationContainer span {
+    font-size: 14px;
+}
+
+#paginationContainer div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+#paginationContainer input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+#paginationContainer button:last-child {
+    background-color: transparent;
+    border: none;
+}
+
+
+/* Contenedor principal de completitud */
+.completitud-container {
+    padding: 20px;
+    background-color: transparent; /* Fondo suave */
+
+}
+
+/* Cuadros KPI */
+.completitud-kpi-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.completitud-kpi-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.completitud-kpi-box p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Contenedor de las gráficas */
+.completitud-charts-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Estilo para el gráfico de dona (Completitud) */
+.completitud-doughnut-chart {
+    max-width: 48%;
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Estilo para el gráfico de barras (Completitud por Categoría) */
+.completitud-bar-chart {
+    max-width: 48%;
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+

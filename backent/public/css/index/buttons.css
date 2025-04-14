@@ -1,0 +1,174 @@
+/* Estilo para los botones dentro de la tabla, solo afectará a los botones dentro de la tabla */
+#results tbody tr {
+    position: relative;
+}
+
+/* Estilo para el contenedor de los botones de agregar y eliminar */
+#results tbody tr .tr-buttons {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none; /* Los botones estarán ocultos inicialmente */
+}
+
+/* Mostrar los botones cuando el mouse pase sobre la fila */
+#results tbody tr:hover .tr-buttons {
+    display: block;
+}
+
+/* Estilo específico para los botones dentro de .tr-buttons */
+#results tbody tr .tr-buttons button {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+/* Botón de agregar fila (verde) */
+#results tbody tr .tr-buttons button.add-row {
+    background-color: green;
+}
+
+/* Botón de eliminar fila (rojo) */
+#results tbody tr .tr-buttons button.delete-row {
+    background-color: red;
+}
+
+#table-container {
+    position: relative;
+    width: 100%;
+    max-height: 400px;
+}
+
+#results tbody {
+    display: block;
+    max-height: 400px;
+    overflow-y: scroll;
+    width: 100%;
+    scrollbar-width: none; /* Para Firefox */
+}
+
+#results tbody::-webkit-scrollbar {
+    display: none; /* Para Chrome, Safari y Edge */
+}
+
+#results {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#results thead {
+    position: sticky;
+    top: 0;
+    background-color: white; /* Ajusta según tu diseño */
+    z-index: 100;
+}
+
+#results th {
+    color:white;  /* Color del texto de los encabezados */
+    padding: 10px;  /* Espaciado interno de las celdas del encabezado */
+    border: 1px solid #ddd;  /* Borde alrededor de los encabezados */
+    text-align: left;  /* Alineación del texto en los encabezados */
+}
+
+
+#results tbody {
+    display: block;
+    max-height: 500px; /* Ajusta la altura según necesites */
+    overflow-y: auto;
+    width: 100%;
+}
+
+#results tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#results td {
+    padding: 10px;
+    border: 1px solid #b51717;
+}
+
+#table-container {
+    position: relative;
+    width: 100%;
+    max-height: 710px;
+    overflow: hidden; /* Oculta la barra de scroll */
+}
+
+#results {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;  /* Hace que las celdas tengan el mismo ancho */
+}
+
+#results th, #results td {
+    padding: 7px;
+    border: 1px solid #ddd;
+    text-align: left;
+    overflow: hidden;  /* Evita que el contenido se desborde */  /* Muestra puntos suspensivos cuando el texto es demasiado largo */
+    white-space: nowrap;  /* Evita que el texto se divida en varias líneas */
+    border-left: none;  /* Elimina el borde izquierdo */
+    border-right: none;  /* Elimina el borde derecho */
+}
+
+#results th {
+    background-color: #1abc9c;  /* Puedes cambiar el color de fondo */
+}
+
+.formula-bar {
+    margin-bottom: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#formula-input {
+    width: 100%;
+    padding: 5px;
+    font-size: 11px;
+    border: none;
+    box-sizing: border-box;
+}
+
+
+#table-container {
+    position: relative; /* Necesario para posicionar los botones */
+}
+
+.scroll-btn {
+    position: absolute;
+    top: 50%; /* Centramos los botones verticalmente */
+    transform: translateY(-50%); /* Centrado perfecto */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.scroll-btn:hover {
+    background-color: #0056b3; /* Cambia color al pasar el mouse */
+}
+
+.scroll-btn:focus {
+    outline: none; /* Elimina el borde de enfoque predeterminado */
+}
+
+.left {
+    left: 10px; /* Posición del botón a la izquierda */
+}
+
+.right {
+    right: 10px; /* Posición del botón a la derecha */
+}

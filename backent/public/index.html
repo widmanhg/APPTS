@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero Interactivo</title>
+    <link rel="stylesheet" href="css/index/import.css">
+    <link rel="stylesheet" href="css/index/modal.css">
+    <link rel="stylesheet" href="css/graph/move.css">
+    <link rel="stylesheet" href="css/index/buttons.css">
+    <link rel="stylesheet" href="css/index/pagination.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+
+
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="botones-parent"></div>
+    </div>
+
+
+    <div class="sidebar" id="sidebar-container">
+        <button class="elementos-sidebar4" id="btn-configuracion" onclick="location.href='/configuration'">
+            <i class="fas fa-cog"></i>
+            <div class="grficos">Configuración</div>
+        </button>
+        <button class="elementos-sidebar3" id="btn-scraping" onclick="location.href='/scraping'">
+            <i class="fas fa-download"></i>
+            <div class="grficos">Obtener datos</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/coso'">
+            <i class="fas fa-table"></i>
+            <div class="grficos">Edición</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-historicos" onclick="location.href='/historico'">
+            <i class="fas fa-clipboard"></i>
+            <div class="grficos">Históricos</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-graficos" onclick="location.href='/graficos'">
+            <i class="fas fa-chart-column"></i>
+            <div class="grficos">Gráficos</div>
+        </button>
+        <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/directorio'">
+            <i class="fas fa-user"></i>
+            <div class="grficos">Directorio</div>
+        </button>
+
+    </div>
+
+    <div class="main-content">
+
+        <div class="titulo-seccion">
+            <i class="fas fa-chart-bar"></i>
+            <span>Tablero de Control</span>
+        </div>
+
+        
+        
+        <button class="btn open-modal" onclick="toggleDatabaseSelection()">
+            <i class="fas fa-database"></i> Importar
+        </button>
+        <button class="btn" id="save-changes-btn" onclick="saveChanges()" disabled>
+            <i class="fas fa-save"></i> Guardar
+        </button>
+        <button onclick="openCSVModal()">
+            <i class="fas fa-file-csv"></i> CSV
+        </button>
+        </button>
+        <button class="btn" onclick="resetFilters()">
+            <i class="fas fa-undo"></i> Restablecer
+        </button>
+        <button id="saveReportButton" class="btn">
+            <i class="fas fa-clipboard"></i> Reporte
+        </button>
+        
+    </div>
+    
+    <div class="table-container">
+        <div class="formula-bar">
+            <input type="text" id="formula-input" placeholder="Haz clic en una celda para ver el contenido...">
+        </div>
+        <div class="table-background">
+            <table id="results">
+                <thead>
+                    <th class="filter-header">ID <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Nombre <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Resumen <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Tamaño <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Ubicación <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Sector <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Sede <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Postal <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Ciudad <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                    <th class="filter-header">Empleados <span class="sort-btn"><i class="fas fa-sort"></i></span></th>
+                </thead>
+                
+                <tbody id="table-body">
+                    <!-- Filas serán cargadas dinámicamente desde la API -->
+                </tbody>
+            </table>
+            
+            <div class="pagination" id="pagination-container"></div>
+
+        </div>
+    </div>
+    
+    <div id="csvModal" class="csv-modal">
+        <div class="csv-modal-content">
+            <h2>Descargar CSV</h2>
+            <p>¿Deseas descargar el CSV de la búsqueda actual?</p>
+            
+            <!-- Línea gris entre el texto y los botones -->
+            <hr>
+            
+            <div class="csv-modal-actions">
+                <button class="cancel" onclick="closeCSVModal()">Cancelar</button>
+                <button class="accept" onclick="downloadCSV()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="reportModal" class="report-modal">
+        <div class="report-modal-content">
+            <h2>Guardar Reporte Histórico</h2>
+            <p>Ingrese un nombre para el reporte:</p>
+            <input type="text" id="reportName" placeholder="Nombre del reporte" required>
+            
+            <!-- Línea gris entre el texto y los botones -->
+            <hr>
+            
+            <div class="report-modal-actions">
+                <button class="cancel" onclick="closeReportModal()">Cancelar</button>
+                <button class="accept" onclick="saveHistoricalReport()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2>Filtro de Datos</h2>
+        <div id="database-selection">
+            <label for="table-select">Selecciona una tabla:</label>
+            <select id="table-select" onchange="loadFilters()">
+                <option value="">Selecciona una tabla</option>
+            </select>
+
+            <div class="custom-multi-select">
+                <label>Nombre:</label>
+                <input type="text" id="nombre-input" placeholder="Ingresa nombres separados por comas">
+            </div>
+            <div class="custom-multi-select">
+                <label>Código Postal:</label>
+                <input type="text" id="codigo-postal-input" placeholder="Ingresa códigos postales separados por comas">
+            </div>
+            
+
+            <div id="filters-container">
+                <div class="custom-multi-select">
+                    <label>Tamaño:</label>
+                    <div class="select-options-container" id="tamano-container">
+                        <div class="select-all-option" onclick="toggleSelectAll('tamano')">Seleccionar todo</div>
+                        <div id="tamano-options" class="options-list"></div>
+                    </div>
+                </div>
+                <div class="custom-multi-select">
+                    <label>Ciudad:</label>
+                    <div class="select-options-container" id="ciudad-container">
+                        <div class="select-all-option" onclick="toggleSelectAll('ciudad')">Seleccionar todo</div>
+                        <div id="ciudad-options" class="options-list"></div>
+                    </div>
+                </div>
+                <div class="custom-multi-select">
+                    <label>Sector:</label>
+                    <div class="select-options-container" id="sector-container">
+                        <div class="select-all-option" onclick="toggleSelectAll('sector')">Seleccionar todo</div>
+                        <div id="sector-options" class="options-list"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button id="apply-filters">Aplicar filtros</button>
+            <button class="cancel" onclick="closeModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/index/filtro.js"></script>
+<script src="js/index/selection.js"></script>
+<script src="js/index/update.js"></script>
+<script src="js/index/report.js"></script>
+<script src="js/index/rows.js"></script>
+
+        
+</body>
+</html>

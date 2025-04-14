@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Eduardo Alberto Alcocer Rosado",
+    "Cargo": "Director de Tecnología de Información",
+    "Foto": "https://media.licdn.com/dms/image/v2/D5603AQFGRld_VQHz7A/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1683923317239?e=2147483647&v=beta&t=8MTZgGVlomYjmhTfLHOMX3C17c8M9W8mpEaAcEfxiR4",
+    "Perfil": "https://mx.linkedin.com/in/ealcocer?trk=org-employees"
+  },
+  "empresa": "FinBe ABC",
+  "sector": "financial services",
+  "fecha": "2025-04-07T16:46:37.791Z",
+  "flag": "green"
+}

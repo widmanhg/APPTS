@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reportes Históricos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/hist/hist.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/modal.css">
+
+</head>
+<body>
+    <div id="app-container">
+        <div class="top-bar">
+            <div class="botones-parent"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar-container">
+            <button class="elementos-sidebar4" id="btn-configuracion" onclick="location.href='/configuration'">
+                <i class="fas fa-cog"></i>
+                <div class="grficos">Configuración</div>
+            </button>
+            <button class="elementos-sidebar3" id="btn-scraping" onclick="location.href='/scraping'">
+                <i class="fas fa-download"></i>
+                <div class="grficos">Obtener datos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/coso'">
+                <i class="fas fa-table"></i>
+                <div class="grficos">Edición</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-historicos" onclick="location.href='/historico'">
+                <i class="fas fa-clipboard"></i>
+                <div class="grficos">Históricos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-graficos" onclick="location.href='/graficos'">
+                <i class="fas fa-chart-column"></i>
+                <div class="grficos">Gráficos</div>
+            </button>
+            <button class="elementos-sidebar" id="btn-edicion" onclick="location.href='/directorio'">
+                <i class="fas fa-user"></i>
+                <div class="grficos">Directorio</div>
+            </button>
+    
+        </div>
+
+        <div id="main-content">
+            <div id="date-filters">
+                <div id="title-section">
+                    <i class="fas fa-file-alt"></i>
+                    <h2>Reportes históricos</h2>
+                </div>
+                
+                <div id="date-inputs">
+                    <div class="date-input-group">
+                        <div class="input-container">
+                            <input type="date" id="fechaDesde" required>
+                            <label for="fechaDesde">Fecha inicio</label>
+                        </div>
+                    </div>
+                
+                    <div class="date-input-group">
+                        <div class="input-container">
+                            <input type="date" id="fechaHasta" required>
+                            <label for="fechaHasta">Fecha final</label>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div id="reports-table">
+                <div class="table-container">
+                    <table class="report-table" id="history-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Fecha <i class="fas fa-sort"></i></th>
+                                <th>Nombre <i class="fas fa-sort"></i></th>
+                                <th>Columnas <i class="fas fa-sort"></i></th>
+                                <th>Filas <i class="fas fa-sort"></i></th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aquí se insertarán las filas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Eliminar Reporte</h3>
+            <p>¿Estás seguro de que deseas eliminar el reporte?</p>
+            <hr>
+            <div class="modal-buttons">
+                <button id="confirm-delete" class="btn btn-danger">Aceptar</button>
+                <button id="cancel-delete" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <!-- Script de Funcionalidades -->
+    <script src="js/hist/importreports.js"></script>
+</body>
+</html>

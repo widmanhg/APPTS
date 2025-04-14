@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Oscar Pardo I",
+    "Cargo": "Director administrativo en Grupo Terranza",
+    "Foto": "https://media.licdn.com/dms/image/v2/C4E03AQEdq8wo96RlOA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1516633543849?e=2147483647&v=beta&t=-y2m2T4N5z09gWQRVCTl468uqJ-kXBSO5XoKsf1OyGI",
+    "Perfil": "https://mx.linkedin.com/in/oscar-pardo-i-a45a4277?trk=org-employees"
+  },
+  "empresa": "Grupo Terranza",
+  "sector": "real estate",
+  "fecha": "2025-04-08T00:02:06.041Z",
+  "flag": "green"
+}

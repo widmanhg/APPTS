@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Javier Perez Bautista",
+    "Cargo": "Auxiliar administrativo en Los Faroles",
+    "Foto": "https://media.licdn.com/dms/image/v2/C4E03AQEdN53XMcUF2g/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1597097111867?e=2147483647&v=beta&t=hS0OkTJtN2LKJ6C93cdGiQ20W0DwO2GRBNuTT9184DE",
+    "Perfil": "https://mx.linkedin.com/in/javier-perez-bautista-5351a41b1?trk=org-employees"
+  },
+  "empresa": "RESTAURANT LOS FAROLES",
+  "sector": "restaurants",
+  "fecha": "2025-04-04T21:37:44.791Z",
+  "flag": "green"
+}

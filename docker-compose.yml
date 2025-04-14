@@ -1,0 +1,19 @@
+services:
+  ts_app:
+    build: ./backent
+    container_name: ts_app
+    ports:
+      - "3000:3000"
+    networks:
+      - final_shared_net
+    environment:
+      DB_HOST: postgres_db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 1234
+      DB_NAME: prueba
+      API_URL: http://fastapi_app:8000  # para hacer fetch desde TypeScript
+
+networks:
+  final_shared_net:
+    external: true

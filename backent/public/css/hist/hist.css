@@ -1,0 +1,155 @@
+/* Estilos generales */
+body {
+  background-color: #f3f4f6;
+  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto', sans-serif; /* Cambiar 'Inter' por 'Roboto' */
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+#app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px; /* Menos padding */
+}
+
+/* Ajuste del contenido principal */
+#main-content {
+  margin-left: -50px; /* Reducir margen izquierdo */
+  margin-top: 10px;
+  padding: 10px; /* Reducir padding */
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Estilos para los filtros de fecha */
+#date-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  padding: 15px; /* Menos padding */
+  margin-bottom: 10px; /* Reducir margen inferior */
+  margin-top: 20px;
+}
+
+#title-section {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Reducir espacio entre elementos */
+}
+
+#title-section h2 {
+  color: #2c3e50;
+  font-size: 17px; /* Mantener el tamaño de fuente */
+  margin: 0;
+  padding: 0; /* Sin padding extra */
+}
+
+#date-inputs {
+  display: flex;
+  gap: 8px; /* Reducir espacio entre inputs */
+  align-items: center;
+}
+
+.date-input-group {
+  flex: none;
+}
+
+/* 🎨 Estilos para el input flotante */
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 140px; /* Reducir ancho de los inputs */
+}
+
+.input-container input {
+  width: 100%;
+  padding: 10px 8px; /* Reducir padding */
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  background-color: white;
+}
+
+.input-container label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 5px;
+  font-size: 2px;
+  color: #888;
+  transition: 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+/* Cuando el input está en focus o tiene texto, el label se mueve arriba */
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 12px;
+  color: #333;
+  background-color: transparent;
+}
+
+/* Estilos para la tabla */
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px; /* Reducir margen superior */
+  background-color: white;
+}
+
+.report-table th, .report-table td {
+  border: 1px solid #ddd;
+  padding: 6px; /* Reducir padding de celdas */
+  text-align: left;
+  font-size: small;
+  border-left: none; /* Eliminar borde izquierdo */
+  border-right: none; /* Eliminar borde derecho */
+}
+
+.report-table th {
+  background-color: #1abc9c;
+  color: white;
+  font-weight: bold;
+}
+
+.report-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Asegurar que la celda de acciones tenga el estilo adecuado */
+.actions-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Agregar algo de espacio entre los botones */
+.actions-cell a, .actions-cell button {
+  padding: 4px; /* Reducir padding */
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: black;
+}
+
+.delete-btn {
+  color: black;
+}
+
+.table-container {
+  width: 100%; /* Ajustar ancho */
+  max-width: 1200px; /* Limitar ancho máximo */
+  background-color: white; 
+  padding: 15px; /* Reducir padding */
+  border-radius: 8px; /* Borde redondeado más pequeño */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
