@@ -378,25 +378,26 @@ app.post('/api/save-config', (req, res) => {
 
   // Validar que el nombre de archivo sea válido
   if (!fileName || !configData) {
-      return res.status(400).json({ message: "Faltan datos para guardar la configuración." });
+    return res.status(400).json({ message: "Faltan datos para guardar la configuración." });
   }
-
-  const filePath = path.join(__dirname, 'configurations', `${fileName}.json`);
 
   // Crear la carpeta si no existe
-  if (!fs.existsSync(path.dirname(filePath))) {
-      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir, { recursive: true });
   }
+
+  const filePath = path.join(configDir, `${fileName}.json`);
 
   // Guardar el archivo JSON
   fs.writeFile(filePath, JSON.stringify(configData, null, 2), (err) => {
-      if (err) {
-          return res.status(500).json({ message: "Error al guardar la configuración." });
-      }
+    if (err) {
+      return res.status(500).json({ message: "Error al guardar la configuración." });
+    }
 
-      res.status(200).json({ message: "Configuración guardada exitosamente." });
+    res.status(200).json({ message: "Configuración guardada exitosamente." });
   });
 });
+
 
 let isCancelled = false;
 
@@ -460,7 +461,7 @@ app.post("/submit-info-form", async (req: Request, res: Response) => {
 
 const pool = new Pool({
   user: 'postgres',    // Cambia por tu usuario
-  host: 'localhost',  // Cambia por tu host
+  host: 'db',  // Cambia por tu host
   database: 'prueba', // Cambia por tu base de datos
   password: '1234', // Cambia por tu contraseña
   port: 5432,

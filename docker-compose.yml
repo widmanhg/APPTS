@@ -4,6 +4,8 @@ services:
     container_name: ts_app
     ports:
       - "3000:3000"
+    volumes:
+      - ./Archives:/app/Archives  # <-- Esto asegura que nada de Archives se pierda
     networks:
       - final_shared_net
     environment:
@@ -12,7 +14,7 @@ services:
       DB_USER: postgres
       DB_PASSWORD: 1234
       DB_NAME: prueba
-      API_URL: http://fastapi_app:8000  # para hacer fetch desde TypeScript
+      API_URL: http://fastapi_app:8000
 
 networks:
   final_shared_net:
