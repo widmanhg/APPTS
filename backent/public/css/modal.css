@@ -73,3 +73,34 @@
 #confirm-delete:hover {
     background-color: #333;
 }
+
+/* Estilo para el botón */
+#open-download-modal {
+    width: 250px;
+    height: 40px;
+    border-radius: 500px;
+    background-color: #2c3e50;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 5px;
+    box-sizing: border-box;
+    gap: -40px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    margin-top: 60px;
+    margin-left: 10px;
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+    position: fixed; top: 20px; right: 20px;margin-top: 70px;margin-right: 30px;
+}
+
+/* Ícono dentro del botón */
+#open-download-modal i {
+    font-size: 16px;
+}
+
+/* Usa los estilos de modal que ya proporcionaste anteriormente */
+

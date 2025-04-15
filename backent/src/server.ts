@@ -460,7 +460,7 @@ app.post("/submit-info-form", async (req: Request, res: Response) => {
 
 const pool = new Pool({
   user: 'postgres',    // Cambia por tu usuario
-  host: 'db',  // Cambia por tu host
+  host: 'localhost',  // Cambia por tu host
   database: 'prueba', // Cambia por tu base de datos
   password: '1234', // Cambia por tu contraseña
   port: 5432,
@@ -492,10 +492,16 @@ app.post('/api/table/:tableName/clear', async (req: Request, res: Response) => {
 
 
 app.post('/api/table/rename', async (req: Request, res: Response) => {
-  const { oldName, newName } = req.body;
+  let { oldName, newName } = req.body;
 
   if (!oldName || !newName) {
     return res.status(400).send('oldName y newName son requeridos');
+  }
+
+  if (oldName.startsWith('empresas_')) {
+    newName = `empresas_${newName}`;
+  } else if (oldName.startsWith('url_')) {
+    newName = `url_${newName}`;
   }
 
   try {
@@ -507,11 +513,18 @@ app.post('/api/table/rename', async (req: Request, res: Response) => {
   }
 });
 
+
 app.post('/api/table/copy', async (req: Request, res: Response) => {
-  const { sourceTable, newTable } = req.body;
+  let { sourceTable, newTable } = req.body;
 
   if (!sourceTable || !newTable) {
     return res.status(400).send('sourceTable y newTable son requeridos');
+  }
+
+  if (sourceTable.startsWith('empresas_')) {
+    newTable = `empresas_${newTable}`;
+  } else if (sourceTable.startsWith('url_')) {
+    newTable = `url_${newTable}`;
   }
 
   try {
@@ -520,6 +533,32 @@ app.post('/api/table/copy', async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error al copiar la tabla', error);
     res.status(500).send('Error al copiar la tabla');
+  }
+});
+
+app.post('/api/concatenate_tables', async (req: Request, res: Response) => {
+  const { table1, table2, new_table } = req.body;
+
+  if (!table1 || !table2 || !new_table) {
+    return res.status(400).json({ error: 'Faltan parámetros requeridos' });
+  }
+
+  const client = await pool.connect();
+
+  try {
+    // Crear tabla nueva copiando la estructura de table1
+    await client.query(`CREATE TABLE ${new_table} (LIKE ${table1} INCLUDING ALL);`);
+
+    // Insertar registros de ambas tablas
+    await client.query(`INSERT INTO ${new_table} SELECT * FROM ${table1};`);
+    await client.query(`INSERT INTO ${new_table} SELECT * FROM ${table2};`);
+
+    res.status(200).json({ message: `Tabla ${new_table} creada exitosamente` });
+  } catch (error) {
+    console.error('Error al concatenar tablas:', error);
+    res.status(500).json({ error: 'Error al concatenar tablas' });
+  } finally {
+    client.release();
   }
 });
 

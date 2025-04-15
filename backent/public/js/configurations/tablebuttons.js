@@ -1,24 +1,58 @@
 
-// Cargar las tablas desde el endpoint '/api/tables'
-async function loadTables(modalType) {
-    try {
-        const response = await fetch('/api/tables', { method: 'POST' });
-        const data = await response.json();
-        const selectId = modalType + "TableSelect";
-        const tableSelect = document.getElementById(selectId);
+  document.querySelectorAll('input[name="sourceType"]').forEach(input => {
+    input.addEventListener('change', () => {
+      loadTables('delete'); // Cambia "delete" por el modal que quieras actualizar
+    });
+  });
 
-        tableSelect.innerHTML = '';
-        data.forEach(table => {
-            const option = document.createElement('option');
-            option.value = table.table_name;
-            option.textContent = table.table_name;
-            tableSelect.appendChild(option);
-        });
+  async function loadTables(modalType) {
+    const selectedType = document.querySelector('input[name="sourceType"]:checked').value;
+    const endpoint = selectedType === "url" ? '/api/tablesurl' : '/api/tables';
+
+    try {
+        const response = await fetch(endpoint, { method: 'POST' });
+        const data = await response.json();
+
+        if (modalType === "concatenate") {
+            const select1 = document.getElementById("concatTableSelect1");
+            const select2 = document.getElementById("concatTableSelect2");
+
+            select1.innerHTML = '';
+            select2.innerHTML = '';
+
+            data.forEach(table => {
+                const option1 = document.createElement('option');
+                option1.value = table.table_name;
+                option1.textContent = table.table_name;
+
+                const option2 = document.createElement('option');
+                option2.value = table.table_name;
+                option2.textContent = table.table_name;
+
+                select1.appendChild(option1);
+                select2.appendChild(option2);
+            });
+        } else {
+            const selectId = modalType + "TableSelect";
+            const tableSelect = document.getElementById(selectId);
+
+            tableSelect.innerHTML = '';
+            data.forEach(table => {
+                const option = document.createElement('option');
+                option.value = table.table_name;
+                option.textContent = table.table_name;
+                tableSelect.appendChild(option);
+            });
+        }
     } catch (error) {
         console.error('Error al obtener las tablas', error);
         alert('Hubo un problema al cargar las tablas');
     }
 }
+
+
+
+
 
 // Abrir el modal y cargar las tablas
 function openModal(modalType) {
@@ -105,10 +139,45 @@ async function copyTable() {
     }
 }
 
+async function concatenateTables() {
+    const table1 = document.getElementById('concatTableSelect1').value;
+    const table2 = document.getElementById('concatTableSelect2').value;
+    const newName = document.getElementById('newConcatTableName').value;
+
+    if (!table1 || !table2 || !newName) {
+        return alert('Selecciona ambas tablas y proporciona un nombre para la nueva tabla');
+    }
+
+    try {
+        const response = await fetch('/api/concatenate_tables', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ table1, table2, new_table: newName })
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message);
+            closeModal('concatenate');
+        } else {
+            alert(result.error || 'Hubo un problema al concatenar las tablas');
+        }
+    } catch (error) {
+        console.error('Error al concatenar las tablas', error);
+        alert('Hubo un problema al concatenar las tablas');
+    }
+}
+
+
+
+
+
+
 // Cargar las tablas cuando la página cargue
 window.onload = function() {
     loadTables('delete');
     loadTables('clear');
     loadTables('rename');
     loadTables('copy');
+    loadTables('concatenate');
 }

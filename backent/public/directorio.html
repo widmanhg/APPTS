@@ -41,6 +41,10 @@
         </button>
     </div>
 
+    <button id="open-download-modal"onclick=openDownloadModal()>
+  <i class="fas fa-file-csv"></i> Descargar CSV
+    </button>
+    
     <div class="employee-cards-container">
         <!-- Las tarjetas de empleados se insertarán dinámicamente aquí -->
     </div>
@@ -61,6 +65,25 @@
 </div>
 
 
+<!-- Modal para descargar empleados -->
+<div id="download-modal" class="modal">
+    <div class="modal-content">
+        <h3>Descargar empleados</h3>
+        <p>¿Deseas descargar la información de todos los empleados en formato CSV?</p>
+        <hr>
+        <div class="modal-buttons">
+            <button id="cancel-download">Cancelar</button>
+            <button id="confirm-download">Descargar CSV</button>
+        </div>
+    </div>
+</div>
+
+<!-- Botón para abrir el modal de descarga -->
+
+
+
+
     <script src="js/directorio/directorio.js"></script>
+    <script src="js/directorio/csv.js"></script>
 </body>
 </html>
