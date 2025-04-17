@@ -59,6 +59,9 @@ class DatabaseManager:
                 print("❌ URL no válida. No se insertará el registro.")
                 return
             
+            print("📦 JSON que será insertado:")
+            print(json.dumps(data, indent=2, ensure_ascii=False))
+            
             query = sql.SQL(""" 
                 INSERT INTO {tabla} (nombre, resumen, telefono, tamano, ubicaciones, fundacion, sector, sitio_web, sede, especialidades, codigo_postal, ciudad, empleados, url)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -93,11 +96,11 @@ class WebScraper:
     def __init__(self):
         self.options = Options()
         self.options.add_argument("--no-sandbox")
-        self.options.add_argument("--headless")  # Corriendo en modo headless
+        self.options.add_argument("--headless")  # Corriendo en modo headless, quitalo para ver que esta pasando
         self.options.add_argument("--disable-gpu")
 
     def start_driver(self):
-        chromedriver_path = "/usr/bin/chromedriver"  # Usando webdriver-manager para instalar y gestionar el driver
+        chromedriver_path = "/usr/bin/chromedriver"# Usando webdriver-manager para instalar y gestionar el driver
         return webdriver.Chrome(service=Service(chromedriver_path), options=self.options)
 
     def scrape(self, url, ciudad, db, tabla_destino, intento=1, max_intentos=3):
@@ -125,7 +128,7 @@ class WebScraper:
                 print("No se pudo obtener el nombre de la empresa.")
 
             try:
-                sections['Resumen'] = driver.find_element(By.XPATH, "//p[contains(@class, 'break-words')]").text.strip()
+                sections['Resumen'] = driver.find_element(By.XPATH, '//*[@id="main-content"]/section[1]/div/section[1]/div/p').text.strip()
             except Exception:
                 print("No se pudo obtener el resumen de la empresa.")
 
@@ -161,7 +164,7 @@ class WebScraper:
                         if address:
                             cp = [re.findall(r'\b\d{5}\b', addr) for addr in address]
                             cp = [item for sublist in cp for item in sublist]
-                            locations_dict[f"{address_counter}"] = {"Dirección": ", ".join(address)}
+                            locations_dict[f"{address_counter}"] = {"Direccion": ", ".join(address)}
                             if cp:
                                 postal_codes_dict[f"{address_counter}"] = cp[0]
                             address_counter += 1

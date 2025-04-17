@@ -1,3 +1,5 @@
+
+
 services:
   db:
     image: postgres:15
@@ -10,9 +12,9 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./initdb:/docker-entrypoint-initdb.d
     networks:
-      - shared_net  # Aquí agregas la red
+      - shared_net
 
   api:
     build: .
@@ -28,11 +30,11 @@ services:
       DB_HOST: db
       DB_PORT: 5432
     networks:
-      - shared_net  # Aquí agregas la misma red
+      - shared_net
 
 volumes:
   postgres_data:
 
 networks:
-  shared_net:  # Aquí defines la red
-    driver: bridge  # El controlador predeterminado para redes Docker
+  shared_net:
+    driver: bridge
