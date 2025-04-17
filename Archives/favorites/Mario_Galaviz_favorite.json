@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Mario Galaviz",
+    "Cargo": "Software Test Engineer",
+    "Foto": "https://media.licdn.com/dms/image/v2/C5603AQHTMq6-fsALaw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1637351597702?e=2147483647&v=beta&t=Jv1931NIoQUpQQZ2ZJc5cYnyTwK4uM3XlnnrTIaHPdU",
+    "Perfil": "https://mx.linkedin.com/in/mario-galaviz-6794108b?trk=org-employees"
+  },
+  "empresa": "Sonatafy Technology - Mexico",
+  "sector": "software development",
+  "fecha": "2025-04-17T04:29:35.182Z",
+  "flag": "green"
+}

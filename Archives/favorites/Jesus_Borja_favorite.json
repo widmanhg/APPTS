@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Jesus Borja",
+    "Cargo": "Senior Project Manager",
+    "Foto": "https://media.licdn.com/dms/image/v2/D5603AQFAY4la7xT8oQ/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1666885484883?e=2147483647&v=beta&t=kLn0TPGXSUmuo2kTX8enmTqQiSviA_ABbvkA_Q3gUgA",
+    "Perfil": "https://mx.linkedin.com/in/jesus-borja-h?trk=org-employees"
+  },
+  "empresa": "Sonatafy Technology - Mexico",
+  "sector": "software development",
+  "fecha": "2025-04-17T04:29:35.862Z",
+  "flag": "green"
+}

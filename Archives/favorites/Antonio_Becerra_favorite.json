@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Antonio Becerra",
+    "Cargo": "Software Engineer",
+    "Foto": "https://media.licdn.com/dms/image/v2/D5603AQGF8RxfMJUdoA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1726651635339?e=2147483647&v=beta&t=oP6iOffMricgXphC21XUAeXk6Eg9jmBUi8HaQhjURPQ",
+    "Perfil": "https://mx.linkedin.com/in/antonio-becerra-77984194/en?trk=org-employees"
+  },
+  "empresa": "Sonatafy Technology - Mexico",
+  "sector": "software development",
+  "fecha": "2025-04-17T04:29:36.732Z",
+  "flag": "green"
+}

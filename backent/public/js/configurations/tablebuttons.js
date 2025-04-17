@@ -1,9 +1,5 @@
 
-  document.querySelectorAll('input[name="sourceType"]').forEach(input => {
-    input.addEventListener('change', () => {
-      loadTables('delete'); // Cambia "delete" por el modal que quieras actualizar
-    });
-  });
+
 
   async function loadTables(modalType) {
     const selectedType = document.querySelector('input[name="sourceType"]:checked').value;
@@ -100,8 +96,17 @@ async function clearTable() {
 // Renombrar tabla seleccionada
 async function renameTable() {
     const tableName = document.getElementById('renameTableSelect').value;
-    const newName = document.getElementById('newTableName').value;
-    if (!tableName || !newName) return alert('Selecciona una tabla y proporciona un nuevo nombre');
+    const userInput = document.getElementById('newTableName').value;
+    if (!tableName || !userInput) return alert('Selecciona una tabla y proporciona un nuevo nombre');
+
+    let newName = userInput;
+
+    // Mantener el prefijo de la tabla original
+    if (tableName.startsWith('empresas_')) {
+        newName = `empresas_${userInput}`;
+    } else if (tableName.startsWith('url_')) {
+        newName = `url_${userInput}`;
+    }
 
     try {
         const response = await fetch('/api/table/rename', {
@@ -148,34 +153,7 @@ async function copyTable() {
 }
 
 
-async function concatenateTables() {
-    const table1 = document.getElementById('concatTableSelect1').value;
-    const table2 = document.getElementById('concatTableSelect2').value;
-    const newName = document.getElementById('newConcatTableName').value;
 
-    if (!table1 || !table2 || !newName) {
-        return alert('Selecciona ambas tablas y proporciona un nombre para la nueva tabla');
-    }
-
-    try {
-        const response = await fetch('/api/concatenate_tables', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ table1, table2, new_table: newName })
-        });
-        const result = await response.json();
-
-        if (response.ok) {
-            alert(result.message);
-            closeModal('concatenate');
-        } else {
-            alert(result.error || 'Hubo un problema al concatenar las tablas');
-        }
-    } catch (error) {
-        console.error('Error al concatenar las tablas', error);
-        alert('Hubo un problema al concatenar las tablas');
-    }
-}
 
 
 
@@ -188,5 +166,4 @@ window.onload = function() {
     loadTables('clear');
     loadTables('rename');
     loadTables('copy');
-    loadTables('concatenate');
 }
