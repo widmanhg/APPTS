@@ -121,8 +121,16 @@ async function renameTable() {
 // Copiar tabla seleccionada
 async function copyTable() {
     const tableName = document.getElementById('copyTableSelect').value;
-    const newName = document.getElementById('newTableCopyName').value;
-    if (!tableName || !newName) return alert('Selecciona una tabla y proporciona un nombre para la nueva tabla');
+    const userInput = document.getElementById('newTableCopyName').value;
+    if (!tableName || !userInput) return alert('Selecciona una tabla y proporciona un nombre para la nueva tabla');
+
+    let newName = userInput;
+
+    if (tableName.startsWith('empresas_')) {
+        newName = `empresas_${userInput}`;
+    } else if (tableName.startsWith('url_')) {
+        newName = `url_${userInput}`;
+    }
 
     try {
         const response = await fetch('/api/table/copy', {
@@ -138,6 +146,7 @@ async function copyTable() {
         alert('Hubo un problema al copiar la tabla');
     }
 }
+
 
 async function concatenateTables() {
     const table1 = document.getElementById('concatTableSelect1').value;

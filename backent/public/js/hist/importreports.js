@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 let reportsData = [];
 
 function loadReportsList() {
-    fetch('http://localhost:3000/api/list-reports')
+    fetch('/api/list-reports')
         .then(response => response.json())
         .then(files => {
             const tableBody = document.querySelector("#history-table tbody");
@@ -19,7 +19,7 @@ function loadReportsList() {
             }
 
             let promises = files.map(fileName =>
-                fetch(`http://localhost:3000/api/report-details/${encodeURIComponent(fileName)}`)
+                fetch(`/api/report-details/${encodeURIComponent(fileName)}`)
                     .then(response => response.json())
                     .then(details => ({
                         fileName: details.fileName,
@@ -27,7 +27,7 @@ function loadReportsList() {
                         name: cleanFileName(details.fileName),
                         columns: cleanHeaders(details.headers),
                         rowCount: details.rowCount,
-                        downloadUrl: `http://localhost:3000/api/download/${encodeURIComponent(details.fileName)}`
+                        downloadUrl: `/api/download/${encodeURIComponent(details.fileName)}`
                     }))
                     .catch(error => {
                         console.error(`Error al cargar detalles del reporte ${fileName}:`, error);
@@ -137,7 +137,7 @@ function closeModal() {
 }
 
 function deleteFile(fileName) {
-    fetch(`http://localhost:3000/api/delete-report/${encodeURIComponent(fileName)}`, { method: 'DELETE' })
+    fetch(`/api/delete-report/${encodeURIComponent(fileName)}`, { method: 'DELETE' })
         .then(response => {
             if (response.ok) {
                 loadReportsList();

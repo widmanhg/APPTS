@@ -336,15 +336,15 @@ app.delete("/api/configurations/:fileName", (req, res) => {
 });
 app.post('/api/save-config', (req, res) => {
     const { fileName, configData } = req.body;
-    // Validar que el nombre de archivo sea válido
+    // Validar que el nombre de archivo y los datos existen
     if (!fileName || !configData) {
         return res.status(400).json({ message: "Faltan datos para guardar la configuración." });
     }
-    const filePath = path.join(__dirname, 'configurations', `${fileName}.json`);
-    // Crear la carpeta si no existe
-    if (!fs_1.default.existsSync(path.dirname(filePath))) {
-        fs_1.default.mkdirSync(path.dirname(filePath), { recursive: true });
+    // Asegurarse de que la carpeta exista
+    if (!fs_1.default.existsSync(configDir)) {
+        fs_1.default.mkdirSync(configDir, { recursive: true });
     }
+    const filePath = path.join(configDir, `${fileName}.json`);
     // Guardar el archivo JSON
     fs_1.default.writeFile(filePath, JSON.stringify(configData, null, 2), (err) => {
         if (err) {
@@ -378,7 +378,7 @@ app.post("/submit-info-form", (req, res) => __awaiter(void 0, void 0, void 0, fu
             return;
         }
         // Enviamos los datos a la otra API usando Axios
-        const response = yield axios_1.default.post('http://fastapi_app:8000/scrape', dataToSend);
+        const response = yield axios_1.default.post('http://0.0.0.0:8000/scrape', dataToSend);
         // Si la solicitud es exitosa, devolvemos la respuesta con los datos de la otra API
         res.status(200).json({
             message: "Datos enviados correctamente.",
@@ -436,15 +436,9 @@ app.post('/api/table/:tableName/clear', (req, res) => __awaiter(void 0, void 0, 
     }
 }));
 app.post('/api/table/rename', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { oldName, newName } = req.body;
+    const { oldName, newName } = req.body;
     if (!oldName || !newName) {
         return res.status(400).send('oldName y newName son requeridos');
-    }
-    if (oldName.startsWith('empresas_')) {
-        newName = `empresas_${newName}`;
-    }
-    else if (oldName.startsWith('url_')) {
-        newName = `url_${newName}`;
     }
     try {
         yield pool.query(`ALTER TABLE "${oldName}" RENAME TO "${newName}"`);
@@ -460,12 +454,6 @@ app.post('/api/table/copy', (req, res) => __awaiter(void 0, void 0, void 0, func
     if (!sourceTable || !newTable) {
         return res.status(400).send('sourceTable y newTable son requeridos');
     }
-    if (sourceTable.startsWith('empresas_')) {
-        newTable = `empresas_${newTable}`;
-    }
-    else if (sourceTable.startsWith('url_')) {
-        newTable = `url_${newTable}`;
-    }
     try {
         yield pool.query(`CREATE TABLE "${newTable}" AS TABLE "${sourceTable}"`);
         res.send(`Tabla "${sourceTable}" copiada a "${newTable}".`);
@@ -473,28 +461,6 @@ app.post('/api/table/copy', (req, res) => __awaiter(void 0, void 0, void 0, func
     catch (error) {
         console.error('Error al copiar la tabla', error);
         res.status(500).send('Error al copiar la tabla');
-    }
-}));
-app.post('/api/concatenate_tables', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { table1, table2, new_table } = req.body;
-    if (!table1 || !table2 || !new_table) {
-        return res.status(400).json({ error: 'Faltan parámetros requeridos' });
-    }
-    const client = yield pool.connect();
-    try {
-        // Crear tabla nueva copiando la estructura de table1
-        yield client.query(`CREATE TABLE ${new_table} (LIKE ${table1} INCLUDING ALL);`);
-        // Insertar registros de ambas tablas
-        yield client.query(`INSERT INTO ${new_table} SELECT * FROM ${table1};`);
-        yield client.query(`INSERT INTO ${new_table} SELECT * FROM ${table2};`);
-        res.status(200).json({ message: `Tabla ${new_table} creada exitosamente` });
-    }
-    catch (error) {
-        console.error('Error al concatenar tablas:', error);
-        res.status(500).json({ error: 'Error al concatenar tablas' });
-    }
-    finally {
-        client.release();
     }
 }));
 const sizeMapping = {
@@ -741,6 +707,7 @@ app.post('/api/create-table', (req, res) => __awaiter(void 0, void 0, void 0, fu
         id SERIAL,
         nombre VARCHAR(255),
         resumen TEXT,
+        telefono VARCHAR(50),
         tamano VARCHAR(50),
         ubicaciones TEXT,
         fundacion VARCHAR(50),
@@ -750,7 +717,7 @@ app.post('/api/create-table', (req, res) => __awaiter(void 0, void 0, void 0, fu
         especialidades TEXT[],
         codigo_postal VARCHAR(1000),
         ciudad VARCHAR(1000),
-        empleados VARCHAR(3000), 
+        empleados VARCHAR(3000) ,
         url TEXT
       );
     `;

@@ -43,10 +43,6 @@ app.get('/scraping', (req, res) => {
 app.get('/directorio', (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'directorio.html'));
 });
-
-
-
-
 const favoriteDir = path.join(__dirname, '../Archives/favorites');
 
 // Verificar si el directorio existe, si no, crearlo
@@ -376,12 +372,12 @@ app.delete("/api/configurations/:fileName", (req, res) => {
 app.post('/api/save-config', (req, res) => {
   const { fileName, configData } = req.body;
 
-  // Validar que el nombre de archivo sea válido
+  // Validar que el nombre de archivo y los datos existen
   if (!fileName || !configData) {
     return res.status(400).json({ message: "Faltan datos para guardar la configuración." });
   }
 
-  // Crear la carpeta si no existe
+  // Asegurarse de que la carpeta exista
   if (!fs.existsSync(configDir)) {
     fs.mkdirSync(configDir, { recursive: true });
   }
@@ -397,7 +393,6 @@ app.post('/api/save-config', (req, res) => {
     res.status(200).json({ message: "Configuración guardada exitosamente." });
   });
 });
-
 
 let isCancelled = false;
 
@@ -430,7 +425,7 @@ app.post("/submit-info-form", async (req: Request, res: Response) => {
     }
 
     // Enviamos los datos a la otra API usando Axios
-    const response = await axios.post('http://fastapi_app:8000/scrape', dataToSend);
+    const response = await axios.post('http://0.0.0.0:8000/scrape', dataToSend);
 
     // Si la solicitud es exitosa, devolvemos la respuesta con los datos de la otra API
     res.status(200).json({
@@ -493,16 +488,10 @@ app.post('/api/table/:tableName/clear', async (req: Request, res: Response) => {
 
 
 app.post('/api/table/rename', async (req: Request, res: Response) => {
-  let { oldName, newName } = req.body;
+  const { oldName, newName } = req.body;
 
   if (!oldName || !newName) {
     return res.status(400).send('oldName y newName son requeridos');
-  }
-
-  if (oldName.startsWith('empresas_')) {
-    newName = `empresas_${newName}`;
-  } else if (oldName.startsWith('url_')) {
-    newName = `url_${newName}`;
   }
 
   try {
@@ -514,7 +503,6 @@ app.post('/api/table/rename', async (req: Request, res: Response) => {
   }
 });
 
-
 app.post('/api/table/copy', async (req: Request, res: Response) => {
   let { sourceTable, newTable } = req.body;
 
@@ -522,11 +510,7 @@ app.post('/api/table/copy', async (req: Request, res: Response) => {
     return res.status(400).send('sourceTable y newTable son requeridos');
   }
 
-  if (sourceTable.startsWith('empresas_')) {
-    newTable = `empresas_${newTable}`;
-  } else if (sourceTable.startsWith('url_')) {
-    newTable = `url_${newTable}`;
-  }
+
 
   try {
     await pool.query(`CREATE TABLE "${newTable}" AS TABLE "${sourceTable}"`);
@@ -537,31 +521,7 @@ app.post('/api/table/copy', async (req: Request, res: Response) => {
   }
 });
 
-app.post('/api/concatenate_tables', async (req: Request, res: Response) => {
-  const { table1, table2, new_table } = req.body;
 
-  if (!table1 || !table2 || !new_table) {
-    return res.status(400).json({ error: 'Faltan parámetros requeridos' });
-  }
-
-  const client = await pool.connect();
-
-  try {
-    // Crear tabla nueva copiando la estructura de table1
-    await client.query(`CREATE TABLE ${new_table} (LIKE ${table1} INCLUDING ALL);`);
-
-    // Insertar registros de ambas tablas
-    await client.query(`INSERT INTO ${new_table} SELECT * FROM ${table1};`);
-    await client.query(`INSERT INTO ${new_table} SELECT * FROM ${table2};`);
-
-    res.status(200).json({ message: `Tabla ${new_table} creada exitosamente` });
-  } catch (error) {
-    console.error('Error al concatenar tablas:', error);
-    res.status(500).json({ error: 'Error al concatenar tablas' });
-  } finally {
-    client.release();
-  }
-});
 
 
 
@@ -886,6 +846,7 @@ app.post('/api/create-table', async (req: Request, res: Response) => {
         id SERIAL,
         nombre VARCHAR(255),
         resumen TEXT,
+        telefono VARCHAR(50),
         tamano VARCHAR(50),
         ubicaciones TEXT,
         fundacion VARCHAR(50),
@@ -895,7 +856,7 @@ app.post('/api/create-table', async (req: Request, res: Response) => {
         especialidades TEXT[],
         codigo_postal VARCHAR(1000),
         ciudad VARCHAR(1000),
-        empleados VARCHAR(3000), 
+        empleados VARCHAR(3000) ,
         url TEXT
       );
     `;
@@ -1195,7 +1156,7 @@ app.get('/api/categoria-tamano', async (req: Request, res: Response) => {
     .pipe(csvParser())
     .on('data', (row) => {
       const sectorColumn = Object.keys(row).find(key => key.toLowerCase().includes('sector'));
-      const tamanoColumn = Object.keys(row).find(key => key.toLowerCase().includes('tamano'));
+      const tamanoColumn = Object.keys(row).find(key => key.toLowerCase().includes('tamano'))
 
       if (sectorColumn && tamanoColumn) {
         const sectorValue = normalizeText(row[sectorColumn]?.trim());
