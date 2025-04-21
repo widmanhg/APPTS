@@ -64,11 +64,32 @@ class LinkedInScraper:
             WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.ID, 'username'))).send_keys(self.linkedin_credentials['email'])
             self.driver.find_element(By.ID, 'password').send_keys(self.linkedin_credentials['password'])
             self.driver.find_element(By.XPATH, '//button[@type="submit"]').click()
-            time.sleep(10)
+            time.sleep(5)  # Da tiempo a que la redirección comience
 
-            if "login" in self.driver.current_url:
-                print("⚠️ No se pudo iniciar sesión.")
-                return False
+            # Esperar hasta salir del checkpoint o del login
+            max_wait = 300  # máximo 5 minutos
+            start_time = time.time()
+
+            while True:
+                current_url = self.driver.current_url
+
+                # Si ya no está ni en checkpoint/challenge ni en login, asumimos que entró bien
+                if "checkpoint/challenge" not in current_url and "login" not in current_url:
+                    break
+
+                if time.time() - start_time > max_wait:
+                    print("⏳ Tiempo de espera excedido para resolver el checkpoint o salir del login.")
+                    return False
+
+                if "checkpoint/challenge" in current_url:
+                    print("🛑 Esperando que se resuelva el checkpoint de seguridad...")
+                elif "login" in current_url:
+                    print("⚠️ Esperando que se complete el login...")
+
+                time.sleep(5)
+
+            # Esperar a que cargue la página final (como el feed o dashboard)
+            WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
 
             self.last_login_time = time.time()
             print("✅ Login exitoso.")
