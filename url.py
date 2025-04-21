@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import os
+import tempfile
 from dotenv import load_dotenv
 
 # Cargar las variables de entorno desde el archivo .env
@@ -31,20 +32,27 @@ class LinkedInScraper:
         with open(locations_file, 'r', encoding='utf-8') as file:
             self.locations_map = json.load(file)
 
+
+
     def init_driver(self):
+    # Crear un directorio temporal único para cada ejecución
+        temp_profile = tempfile.mkdtemp()
+
         options = webdriver.ChromeOptions()
+        #options.add_argument("--headless=new") 
         options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-blink-features=AutomationControlled')
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_argument('--headless')  # Ejecutar en modo sin cabeza
-
-        # Ruta a tu archivo chromedriver.exe
+        options.add_argument('--display=host.docker.internal:0.0')
+        options.add_argument(f'--user-data-dir={temp_profile}')  # Usar el perfil temporal
+        
+        # Ruta a tu archivo chromedriver
         chromedriver_path = "/usr/bin/chromedriver"
-
+        
         # Usar Service para indicar la ruta del chromedriver
         service = Service(executable_path=chromedriver_path)
-
+        
         # Inicializar el driver con el servicio y opciones
         self.driver = webdriver.Chrome(service=service, options=options)
 
@@ -169,8 +177,8 @@ def run_scraper():
 
     # Credenciales de LinkedIn (no deben ir al .env)
     linkedin_credentials = {
-        'email': 'sesopedrizo@gmail.com',
-        'password': 'mondongo11'
+        'email': 'seljuan60@gmail.com',
+        'password': 'seljuan60'
     }
 
     locations_file = "locations.json"

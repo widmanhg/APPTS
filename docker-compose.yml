@@ -15,7 +15,6 @@ services:
       - ./initdb:/docker-entrypoint-initdb.d
     networks:
       - shared_net
-
   api:
     build: .
     container_name: fastapi_app
@@ -29,6 +28,9 @@ services:
       DB_PASSWORD: 1234
       DB_HOST: db
       DB_PORT: 5432
+      DISPLAY: ${DISPLAY:-host.docker.internal:0.0}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix  # Montar el socket de X11
     networks:
       - shared_net
 

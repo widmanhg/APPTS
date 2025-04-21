@@ -12,6 +12,7 @@ import json
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import os
+import tempfile
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -95,9 +96,22 @@ class DatabaseManager:
 class WebScraper:
     def __init__(self):
         self.options = Options()
+
+        # Crear un directorio temporal único para el perfil de usuario
+        temp_profile = tempfile.mkdtemp()
+
+        # Quitar headless para poder ver el navegador
+        #self.options.add_argument("--headless=new") 
         self.options.add_argument("--no-sandbox")
-        self.options.add_argument("--headless")  # Corriendo en modo headless, quitalo para ver que esta pasando
         self.options.add_argument("--disable-gpu")
+        self.options.add_argument("--disable-blink-features=AutomationControlled")
+        self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        
+        # Mostrar GUI a través de VcXsrv
+        self.options.add_argument("--display=host.docker.internal:0.0")
+
+        # Usar perfil temporal (así no se guarda sesión anterior)
+        self.options.add_argument(f"--user-data-dir={temp_profile}")
 
     def start_driver(self):
         chromedriver_path = "/usr/bin/chromedriver"# Usando webdriver-manager para instalar y gestionar el driver
