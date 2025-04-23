@@ -36,7 +36,6 @@ def cancel_scrape():
     return {"message": "El proceso de scraping se ha cancelado."}
 
 
-# Definir el modelo de solicitud
 class ScraperRequest(BaseModel):
     email: str
     password: str
@@ -46,60 +45,46 @@ class ScraperRequest(BaseModel):
     industries: list
     company_sizes: list
     ban: list  # Palabras bloqueadas en las URLs
+    used: bool  # 👈 Nuevo campo
 
-# Inicializar la app FastAPI
-app = FastAPI()
 
 @app.post("/url")
-async def run_linkedin_scraper(scraper_request: ScraperRequest):
-    # Convertir las ubicaciones a una lista si están en formato diferente
+async def run_scraper_endpoint(request: ScraperRequest):
     try:
-        # Leer el archivo de ubicaciones
-        locations_file = "locations.json"
-        with open(locations_file, 'r', encoding='utf-8') as file:
-            locations_map = json.load(file)
-
         # Configuración de base de datos y credenciales de LinkedIn
         db_config = {
-            'dbname': os.getenv("DB_NAME"),
-            'user': os.getenv("DB_USER"),
-            'password': os.getenv("DB_PASSWORD"),
-            'host': os.getenv("DB_HOST"),
-            'port': os.getenv("DB_PORT")}
-
-        
-        linkedin_credentials = {
-            'email': scraper_request.email,
-            'password': scraper_request.password
+            'dbname': os.getenv('DB_NAME'),
+            'user': os.getenv('DB_USER'),
+            'password': os.getenv('DB_PASSWORD'),
+            'host': os.getenv('DB_HOST'),
+            'port': os.getenv('DB_PORT')
         }
 
-        # Crear una instancia del scraper
+        # Inicializar el scraper con los datos recibidos
         scraper = LinkedInScraper(
-            db_config=db_config,
-            linkedin_credentials=linkedin_credentials,
-            locations_file=locations_file,
-            pages_per_size=scraper_request.pages_per_size,
-            ban=scraper_request.ban
+            db_config,
+            linkedin_credentials={'email': request.email, 'password': request.password},
+            locations_file="locations.json",  # O ajusta según sea necesario
+            pages_per_size=request.pages_per_size,
+            ban=request.ban,
+            used=request.used
         )
 
-        # Ejecutar el scraping
+        # Ejecutar el scraper
         scraper.scrape_all_companies(
-            locations=scraper_request.location,
-            industries=scraper_request.industries,
-            company_sizes=scraper_request.company_sizes,
-            base_url_template="https://www.linkedin.com/search/results/companies/?companyHqGeo=%5B%22{location}%22%5D&industryCompanyVertical=%5B%22{industry}%22%5D&companySize=%5B%22{company_size}%22%5D&keywords=&origin=FACETED_SEARCH&page=1",
-            tabla=scraper_request.tabla
+            locations=request.location,
+            industries=request.industries,
+            company_sizes=request.company_sizes,
+            base_url_template="https://www.linkedin.com/search/results/companies/?companyHqGeo=%5B%22{location}%22%5D"
+                              "&industryCompanyVertical=%5B%22{industry}%22%5D"
+                              "&companySize=%5B%22{company_size}%22%5D"
+                              "&keywords=&origin=FACETED_SEARCH&page=1",
+            tabla=request.tabla
         )
-
-        # Cerrar el driver de Chrome
         scraper.close_driver()
-
-        return {"message": "Scraping completado exitosamente."}
-    
+        return {"message": "Scraping completed successfully."}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error al ejecutar el scraper: {str(e)}")
-
-
+        raise HTTPException(status_code=500, detail=f"Error running scraper: {e}")
 
 
 # Configuración de la base de datos para el scraping de información (asumiendo implementación)
