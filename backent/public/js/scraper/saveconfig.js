@@ -50,7 +50,8 @@ function saveconfig() {
                 location: locationsArray.length > 0 ? locationsArray : [" "], // Si está vacío, asigna un array con " "
                 industries: industrias.length > 0 ? industrias : [" "], // Si está vacío, asigna un array con " "
                 company_sizes: numeroEmpleados.length > 0 ? numeroEmpleados : [" "], // Si está vacío, asigna un array con " "
-                ban: empresasBloqueadas.length > 0 ? empresasBloqueadas : [" "] // Si está vacío, asigna un array con " "
+                ban: empresasBloqueadas.length > 0 ? empresasBloqueadas : [" "], // Si está vacío, asigna un array con " "
+                used: false // Se agrega el valor 'used' con valor false
             };
   
             // Guardar los datos usando el endpoint para guardarlos
@@ -81,7 +82,8 @@ function saveconfig() {
         .catch(error => {
             console.error("Error al obtener los datos:", error);
         });
-  }
+}
+
   
   // Función para cerrar el modal
   function closeSaveModal() {

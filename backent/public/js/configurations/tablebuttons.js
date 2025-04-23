@@ -99,13 +99,13 @@ async function renameTable() {
     const userInput = document.getElementById('newTableName').value;
     if (!tableName || !userInput) return alert('Selecciona una tabla y proporciona un nuevo nombre');
 
-    let newName = userInput;
+    let newName = userInput.toLowerCase(); // ← Convertir a minúsculas
 
     // Mantener el prefijo de la tabla original
     if (tableName.startsWith('empresas_')) {
-        newName = `empresas_${userInput}`;
+        newName = `empresas_${newName}`;
     } else if (tableName.startsWith('url_')) {
-        newName = `url_${userInput}`;
+        newName = `url_${newName}`;
     }
 
     try {
@@ -123,18 +123,17 @@ async function renameTable() {
     }
 }
 
-// Copiar tabla seleccionada
 async function copyTable() {
     const tableName = document.getElementById('copyTableSelect').value;
     const userInput = document.getElementById('newTableCopyName').value;
     if (!tableName || !userInput) return alert('Selecciona una tabla y proporciona un nombre para la nueva tabla');
 
-    let newName = userInput;
+    let newName = userInput.toLowerCase(); // ← Convertir a minúsculas
 
     if (tableName.startsWith('empresas_')) {
-        newName = `empresas_${userInput}`;
+        newName = `empresas_${newName}`;
     } else if (tableName.startsWith('url_')) {
-        newName = `url_${userInput}`;
+        newName = `url_${newName}`;
     }
 
     try {
@@ -151,10 +150,6 @@ async function copyTable() {
         alert('Hubo un problema al copiar la tabla');
     }
 }
-
-
-
-
 
 
 

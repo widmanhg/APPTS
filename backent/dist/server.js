@@ -474,31 +474,31 @@ const sizeMapping = {
     'Más de 10,001 empleados': 'I'
 };
 app.post("/api/get-urls", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password, tabla, location, industries, company_sizes, pages_per_size, ban } = req.body;
-    // Verifica si los valores requeridos están presentes
+    if (!jsonCreado) {
+        return res.status(403).json({ error: "Primero debes definir el usuario" });
+    }
+    const { email, password, tabla, location, industries, company_sizes, pages_per_size, ban, used } = req.body;
     if (!email || !password || !tabla || !location || !industries || !company_sizes || !pages_per_size || !ban) {
         return res.status(400).json({ error: "Faltan parámetros en la solicitud" });
     }
-    // No hay ningún tipo de limpieza, formateo o conversión de datos aquí
     const requestData = {
-        email: email,
-        password: password,
-        tabla: tabla,
-        location: location,
-        industries: industries,
-        company_sizes: company_sizes,
-        pages_per_size: pages_per_size,
-        ban: ban
+        email,
+        password,
+        tabla,
+        location,
+        industries,
+        company_sizes,
+        pages_per_size,
+        ban,
+        used
     };
     console.log("Datos recibidos:", requestData);
     try {
-        // Reenvía la solicitud al endpoint de FastAPI
         const fastApiResponse = yield axios_1.default.post('http://fastapi_app:8000/url', requestData, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        // Devuelve la respuesta de FastAPI al cliente
         res.json(fastApiResponse.data);
     }
     catch (error) {
@@ -1093,29 +1093,28 @@ app.post('/api/empleadosporempresa', (req, res) => __awaiter(void 0, void 0, voi
         res.status(500).json({ message: 'Error al procesar el archivo CSV', error: err });
     });
 }));
+let jsonCreado = false;
 app.post("/crear-json", (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).json({ error: "Faltan campos: email o password" });
     }
-    // Crear el objeto con los datos recibidos
     const jsonData = {
         email,
-        password
+        password,
+        used: false
     };
-    // Directorio donde se guardará el archivo
     const keyDir = path.join(__dirname, "../Archives/key");
-    // Asegurarse de que el directorio exista, si no lo crea
     if (!fs_1.default.existsSync(keyDir)) {
         fs_1.default.mkdirSync(keyDir, { recursive: true });
     }
-    // Ruta completa para guardar el archivo clave.json
     const filePath = path.join(keyDir, "clave.json");
-    // Guardar el JSON en el archivo
     fs_1.default.writeFile(filePath, JSON.stringify(jsonData, null, 2), (err) => {
         if (err) {
             return res.status(500).json({ error: "Error al guardar el archivo" });
         }
+        // Establece la bandera a true
+        jsonCreado = true;
         res.status(200).json({ message: "Archivo clave.json creado exitosamente" });
     });
 });
@@ -1131,10 +1130,26 @@ app.get("/obtener-json", (req, res) => {
             if (err) {
                 return res.status(500).json({ error: "Error al leer el archivo" });
             }
-            // Convertir el contenido del archivo en un objeto JSON y enviarlo como respuesta
+            // Convertir el contenido del archivo en un objeto JSON
             try {
                 const jsonData = JSON.parse(data);
-                res.status(200).json(jsonData);
+                // Si 'used' es false, lo devolvemos como false, luego lo cambiamos a true
+                if (jsonData.used === false) {
+                    // Devolver los datos con 'used' en false
+                    res.status(200).json(jsonData);
+                    // Cambiar el valor de 'used' a true y guardar el archivo actualizado
+                    jsonData.used = true;
+                    // Guardar el JSON actualizado en el archivo
+                    fs_1.default.writeFile(filePath, JSON.stringify(jsonData, null, 2), (writeErr) => {
+                        if (writeErr) {
+                            console.error("Error al actualizar el archivo JSON:", writeErr);
+                        }
+                    });
+                }
+                else {
+                    // Si 'used' ya es true, devolver los datos con 'used' en true
+                    res.status(200).json(jsonData);
+                }
             }
             catch (error) {
                 res.status(500).json({ error: "Error al parsear el contenido del archivo JSON" });

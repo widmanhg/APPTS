@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const email = data.email || "";
                 const password = data.password || "";
+                const used = data.used || false;
+
                 const ubicaciones = document.getElementById("selectedValues")?.value || "";
                 const tablaOrigen = document.getElementById("select-tabla-origen")?.value || "";
                 const industrias = window.getSelectedIndustries ? window.getSelectedIndustries() : [];
@@ -45,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const jsonData = {
                     email: email || " ",
                     password: password || " ",
+                    used: used, //
                     pages_per_size: paginas || " ",
                     tabla: tablaOrigen || " ",
                     location: locationsArray.length > 0 ? locationsArray : [" "],

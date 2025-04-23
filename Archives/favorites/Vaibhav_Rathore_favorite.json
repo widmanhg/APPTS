@@ -1,0 +1,12 @@
+{
+  "empleado": {
+    "Nombre": "Vaibhav Rathore",
+    "Cargo": "Account Manager",
+    "Foto": "https://media.licdn.com/dms/image/v2/D5603AQG6R_dOR0IfVg/profile-displayphoto-shrink_100_100/B56ZVAj0c_HEAU-/0/1740544888761?e=2147483647&v=beta&t=9pk6ADh-vo15U8IMyqY4eqw9KIOEPPg6bq3ZtIIIoXs",
+    "Perfil": "https://www.linkedin.com/in/vaibhav-rathore-a5aa6b52?trk=org-employees"
+  },
+  "empresa": "Galactic Minds INC",
+  "sector": "it services and it consulting",
+  "fecha": "2025-04-20T22:18:49.320Z",
+  "flag": "green"
+}

@@ -12,14 +12,16 @@ function closeModal() {
 
 // Función que se ejecuta cuando se hace clic en "Aceptar" en el modal
 function createTableFromModal() {
-    const tableName = document.getElementById('table-name-input').value; // Obtenemos el valor del input
+    let tableName = document.getElementById('table-name-input').value.trim();
 
     if (!tableName) {
         alert("Por favor, ingresa un nombre de tabla.");
         return;
     }
 
-    createNewTable('urls', tableName); // Llamamos a la función de crear tabla con el nombre ingresado
+    tableName = tableName.toLowerCase(); // Convertimos a minúsculas
+
+    createNewTable('urls', tableName); // Llamamos a la función de crear tabla con el nombre en minúsculas
 }
 
 // Función para crear la nueva tabla
@@ -55,28 +57,30 @@ async function createNewTable(type, tableName) {
     }
 }
 
-// Función para abrir el modal
+// Función para abrir el modal de información
 function openModalInfo() {
     const modal = document.getElementById('modal-create-table-info');
     modal.style.display = 'flex'; // Muestra el modal
 }
 
-// Función para cerrar el modal
+// Función para cerrar el modal de información
 function closeModalInfo() {
     const modal = document.getElementById('modal-create-table-info');
     modal.style.display = 'none'; // Oculta el modal
 }
 
-// Función que se ejecuta cuando se hace clic en "Aceptar" en el modal
+// Función que se ejecuta cuando se hace clic en "Aceptar" en el modal de información
 function createTableFromModalInfo() {
-    const tableName = document.getElementById('table-name-input-info').value; // Obtenemos el valor del input
+    let tableName = document.getElementById('table-name-input-info').value.trim();
 
     if (!tableName) {
         alert("Por favor, ingresa un nombre de tabla.");
         return;
     }
 
-    createNewTableInfo(tableName); // Llamamos a la función de crear tabla con el nombre ingresado
+    tableName = tableName.toLowerCase(); // Convertimos a minúsculas
+
+    createNewTableInfo(tableName); // Llamamos a la función de crear tabla con el nombre en minúsculas
 }
 
 // Función para crear la nueva tabla de información
